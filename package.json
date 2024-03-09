@@ -1,0 +1,43 @@
+{
+  "name": "hugo-install",
+  "version": "1.0.0",
+  "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
+  "keywords": [
+    "hugo",
+    "gohugo",
+    "install",
+    "binary",
+    "wrapper"
+  ],
+  "homepage": "https://github.com/z0rrn/hugo-install",
+  "bugs": "https://github.com/z0rrn/hugo-install/issues",
+  "license": "Apache-2.0",
+  "author": "Frederik Zorn <fz@zorrn.net>",
+  "type": "module",
+  "module": "install.js",
+  "bin": {
+    "hugo": "bin/cli.js"
+  },
+  "repository": "https://github.com/z0rrn/hugo-install.git",
+  "scripts": {
+    "postinstall": "node ./install.js",
+    "lint:fix": "xo --fix && prettier --write . ",
+    "lint": "xo && prettier --check ."
+  },
+  "dependencies": {
+    "decompress": "^4.2.1",
+    "package-config": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "xo": "^0.57.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "hugo-install": {
+    "hugoVersion": "0.123.2"
+  }
+}
