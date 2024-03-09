@@ -1,0 +1,35 @@
+// Build custom devcontainer
+// Documentation and specification: https://aka.ms/devcontainer.json
+
+{
+  "name": "Bun dev environment",
+
+  "build": {
+    // relative path to Dockerfile to create container from (source: https://containers.dev/guide/dockerfile)
+    "dockerfile": "Dockerfile"
+  },
+
+  // defaults to install / configure
+  "features": {
+    // install zsh
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "installOhMyZshConfig": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+
+    // install github-cli
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  }
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "vscode"
+}
