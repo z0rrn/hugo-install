@@ -13,7 +13,7 @@
 First you need to specify the desired Hugo version (will fail if not set). If you forget this just rerun the install command.
 
 ```json
-}
+{
   "hugo-install": {
     "hugoVersion": "0.123.2"
   }
@@ -68,7 +68,7 @@ hugo-install supports overwriting the download url. There are multiple ways to d
 ### The `hugo-install` section of your `package.json`
 
 ```json
-}
+{
   "hugo-install": {
     "hugoVersion": "0.123.2",
     "URL": "https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz"

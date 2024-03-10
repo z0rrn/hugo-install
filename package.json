@@ -1,6 +1,6 @@
 {
   "name": "hugo-install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
   "keywords": [
     "hugo",
