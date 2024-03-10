@@ -36,6 +36,10 @@ If you use Bun you need to add this to your package.json to [allow the postinsta
 }
 ```
 
+### Requirements
+
+This project uses native fetch (so no node-fetch) so you need nodejs version >= 18.0.0.
+
 ## Usage
 
 ### npm run-script
