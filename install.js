@@ -8,21 +8,10 @@ import { packageConfig } from "package-config";
 // Get namespaced config for hugo-install
 const config = await packageConfig("hugo-install");
 
-// Set path to download to
+// Set path to download to (./node_modules/hugo-install/vendor/)
 const targetDirectory = path.join(
   url.fileURLToPath(new URL("vendor/", import.meta.url)),
 );
-
-// Append compressed file
-const compressedFile =
-  process.platform === "win32"
-    ? `${targetDirectory}hugo.zip`
-    : `${targetDirectory}hugo.tar.gz`;
-// Append extracted file
-const extractedFile =
-  process.platform === "win32"
-    ? `${targetDirectory}hugo.exe`
-    : `${targetDirectory}hugo`;
 
 // Specify filemap of downloadable files
 const downloadFileMap = {
@@ -69,55 +58,30 @@ const downloadUrl =
   ].find(Boolean) ||
   `https://github.com/gohugoio/hugo/releases/download/v${config.hugoVersion}/${downloadFile}`;
 
-// Function to download file
-// variable names all lowercase
-const download = async (
-  downloadurl,
-  targetdirectory,
-  compressedfile,
-  extractedfile,
-  callback,
-) => {
-  // Create folder, no error if folder exists
-  try {
-    await fs.mkdir(targetdirectory);
-    console.log(`Folder ${targetdirectory} created!`);
-  } catch {
-    console.log(`Folder ${targetdirectory} already created!`);
-  }
+// Create folder, no error if folder exists
+try {
+  await fs.mkdir(targetDirectory);
+  console.log(`Folder ${targetDirectory} created`);
+} catch {
+  console.log(`Folder ${targetDirectory} already created`);
+}
 
+// Download and decompress file (file to download, where to download to)
+try {
   // Fetch file and throw error if response isn't ok
-  const response = await fetch(downloadurl);
-
-  if (!response.ok) {
-    throw new Error(`Unexpected response ${response.statusText}!`);
+  const fetchedFile = await fetch(downloadUrl);
+  if (!fetchedFile.ok) {
+    throw new Error(`Unexpected response ${fetchedFile.statusText}`);
   }
 
-  // Write file to buffer -> file
-  const buffer = Buffer.from(await response.arrayBuffer());
-  await fs.writeFile(compressedfile, buffer);
-  console.log(`Compressed file downloaded to ${compressedfile}`);
-
-  // Call extract function so that it's executed after this
-  callback(compressedfile, targetdirectory, extractedfile);
-};
-
-// Extract the tar.gz/zip to vendor folder
-const extract = async (compressedfile, targetdirectory, extractedfile) => {
-  try {
-    await decompress(compressedfile, targetdirectory);
-    console.log(`Hugo successfully installed to: ${extractedfile}!`);
-  } catch (error) {
-    // Give output on error
-    console.log(`Failed to install hugo: ${error}`);
-  }
-};
-
-// Call download and extract function
-download(
-  downloadUrl,
-  targetDirectory,
-  compressedFile,
-  extractedFile,
-  extract,
-).catch(console.error);
+  // Decompress directly from buffer
+  await decompress(
+    Buffer.from(await fetchedFile.arrayBuffer()),
+    targetDirectory,
+  );
+  console.log(
+    `Hugo installed to ${targetDirectory} (as hugo.exe (Windows) or hugo (everything else))`,
+  );
+} catch (error) {
+  throw new Error(`Failed to download and decompress Hugo: ${error}`);
+}

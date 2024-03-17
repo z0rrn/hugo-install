@@ -1,8 +1,5 @@
 {
   "space": true,
   "extends": ["prettier"],
-  "rules": {
-    "max-params": "off",
-    "unicorn/prefer-top-level-await": "off"
-  }
+  "rules": {}
 }

@@ -13,7 +13,7 @@ import path from "node:path";
 import process from "node:process";
 import url from "node:url";
 
-// Declare file to execute (again, copied from ../install.js)
+// Declare file to execute (copied from ../install.js)
 const targetDirectory = path.join(
   url.fileURLToPath(new URL("../vendor/", import.meta.url)),
 );

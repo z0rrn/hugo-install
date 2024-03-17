@@ -25,7 +25,10 @@
   "bin": {
     "hugo": "bin/cli.js"
   },
-  "repository": "https://github.com/z0rrn/hugo-install.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/z0rrn/hugo-install.git"
+  },
   "scripts": {
     "postinstall": "node ./install.js",
     "lint:fix": "xo --fix && prettier --write . ",
