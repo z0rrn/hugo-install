@@ -42,7 +42,7 @@
     "@types/bun": "latest",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
-    "xo": "^0.57.0"
+    "xo": "^0.58.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

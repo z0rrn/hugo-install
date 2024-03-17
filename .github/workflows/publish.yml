@@ -14,7 +14,7 @@ on:
 
 env:
   # tool versions
-  BUN_VERSION: 1.0.30 # used for linting
+  BUN_VERSION: 1.0.32 # used for linting
   NODE_LTS_VERSION: 20 # used for publishing
 
 permissions:
