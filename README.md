@@ -128,6 +128,6 @@ spawn(hugoPath, ["--config=path/to/config.toml"], {
 
 ## License
 
-[APACHE 2.0](LICENSE) © Frederik Zorn
+[MIT](LICENSE) © Frederik Zorn
 
 Made with :heart:

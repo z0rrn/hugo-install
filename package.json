@@ -1,6 +1,6 @@
 {
     "name": "hugo-install",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
     "keywords": [
         "hugo",
@@ -11,14 +11,15 @@
     ],
     "homepage": "https://github.com/z0rrn/hugo-install",
     "bugs": "https://github.com/z0rrn/hugo-install/issues",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "author": "Frederik Zorn <fz@zorrn.net>",
     "type": "module",
-    "module": "install.js",
+    "module": "main.js",
     "files": [
         "README.md",
         "LICENSE",
         "jsconfig.json",
+        "main.js",
         "bin/hugo-install.js",
         "bin/cli.js"
     ],
