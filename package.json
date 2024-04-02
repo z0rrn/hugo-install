@@ -1,56 +1,54 @@
 {
-  "name": "hugo-install",
-  "version": "1.0.2",
-  "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
-  "keywords": [
-    "hugo",
-    "gohugo",
-    "install",
-    "binary",
-    "wrapper"
-  ],
-  "homepage": "https://github.com/z0rrn/hugo-install",
-  "bugs": "https://github.com/z0rrn/hugo-install/issues",
-  "license": "Apache-2.0",
-  "author": "Frederik Zorn <fz@zorrn.net>",
-  "type": "module",
-  "module": "install.js",
-  "files": [
-    "README.md",
-    "LICENSE",
-    "jsconfig.json",
-    "install.js",
-    "bin/cli.js"
-  ],
-  "bin": {
-    "hugo": "bin/cli.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/z0rrn/hugo-install.git"
-  },
-  "scripts": {
-    "postinstall": "node ./install.js",
-    "lint:fix": "xo --fix && prettier --write . ",
-    "lint": "xo && prettier --check ."
-  },
-  "dependencies": {
-    "decompress": "^4.2.1",
-    "package-config": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5",
-    "xo": "^0.58.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "engine": {
-    "node": ">=18.0.0"
-  },
-  "hugo-install": {
-    "hugoVersion": "0.123.2"
-  }
+    "name": "hugo-install",
+    "version": "2.0.0",
+    "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
+    "keywords": [
+        "hugo",
+        "gohugo",
+        "install",
+        "binary",
+        "wrapper"
+    ],
+    "homepage": "https://github.com/z0rrn/hugo-install",
+    "bugs": "https://github.com/z0rrn/hugo-install/issues",
+    "license": "Apache-2.0",
+    "author": "Frederik Zorn <fz@zorrn.net>",
+    "type": "module",
+    "module": "install.js",
+    "files": [
+        "README.md",
+        "LICENSE",
+        "jsconfig.json",
+        "bin/hugo-install.js",
+        "bin/cli.js"
+    ],
+    "bin": {
+        "hugo-install": "bin/hugo-install.js",
+        "hugo": "bin/cli.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/z0rrn/hugo-install.git"
+    },
+    "scripts": {
+        "testinstall": "hugo-install --version 0.123.2",
+        "lint:fix": "xo --fix && prettier --write . ",
+        "lint": "xo && prettier --check ."
+    },
+    "dependencies": {
+        "commander": "^12.0.0",
+        "decompress": "^4.2.1"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "eslint-config-prettier": "^9.1.0",
+        "prettier": "^3.2.5",
+        "xo": "^0.58.0"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "engine": {
+        "node": ">=18.0.0"
+    }
 }

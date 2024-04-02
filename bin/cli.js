@@ -9,20 +9,11 @@
  */
 
 import { spawn } from "node:child_process";
-import path from "node:path";
 import process from "node:process";
-import url from "node:url";
-
-// Declare file to execute (copied from ../install.js)
-const targetDirectory = path.join(
-  url.fileURLToPath(new URL("../vendor/", import.meta.url)),
-);
-const extractedFile =
-  process.platform === "win32"
-    ? `${targetDirectory}hugo.exe`
-    : `${targetDirectory}hugo`;
+// Import execution path
+import hugoPath from "../main.js";
 
 const input = process.argv.slice(2);
 
 // Exec hugo binary with second arguments
-spawn(extractedFile, input, { stdio: "inherit" }).on("exit", process.exit);
+spawn(hugoPath, input, { stdio: "inherit" }).on("exit", process.exit);

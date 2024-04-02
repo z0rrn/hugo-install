@@ -1,71 +1,71 @@
 name: Lint and publish to npmjs
 
 on:
-  push:
-    # no run on dependabot branches
-    branches:
-      - "**"
-      - "!dependabot/**"
-    # publish on new release
-  release:
-    types: [published]
-  pull_request:
-  workflow_dispatch:
+    push:
+        # no run on dependabot branches
+        branches:
+            - "**"
+            - "!dependabot/**"
+        # publish on new release
+    release:
+        types: [published]
+    pull_request:
+    workflow_dispatch:
 
 env:
-  # tool versions
-  BUN_VERSION: 1.0.32 # used for linting
-  NODE_LTS_VERSION: 20 # used for publishing
+    # tool versions
+    BUN_VERSION: 1.1.0 # used for linting
+    NODE_LTS_VERSION: 20 # used for publishing
 
 permissions:
-  # npm provenance: mint an ID-token
-  id-token: write
+    # npm provenance: mint an ID-token
+    id-token: write
 
 jobs:
-  lint:
-    name: Lint (Xo and Prettier)
-    runs-on: ubuntu-latest
+    lint:
+        name: Lint (Xo and Prettier)
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Clone repository
+              uses: actions/checkout@v4
 
-      - name: Set up Bun.sh
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: ${{ env.BUN_VERSION }}
+            - name: Set up Bun.sh
+              uses: oven-sh/setup-bun@v1
+              with:
+                  bun-version: ${{ env.BUN_VERSION }}
 
-      - name: Install dependencies (no change to bun.lockb)
-        run: bun install --frozen-lockfile
+            - name: Install dependencies (no change to bun.lockb)
+              run: bun install --frozen-lockfile
 
-      - name: Lint
-        run: bun run lint
+            - name: Lint
+              run: bun run lint
 
-  publish:
-    name: Publish on npmjs
-    if: github.repository == 'z0rrn/hugo-install' && github.event_name == 'release'
-    needs: [lint]
-    runs-on: ubuntu-latest
+    publish:
+        name: Publish on npmjs
+        if: github.repository == 'z0rrn/hugo-install' && github.event_name == 'release'
+        needs: [lint]
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Clone repository
+              uses: actions/checkout@v4
 
-      - name: Set up Bun.sh
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: ${{ env.BUN_VERSION }}
+            - name: Set up Bun.sh
+              uses: oven-sh/setup-bun@v1
+              with:
+                  bun-version: ${{ env.BUN_VERSION }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_LTS_VERSION }}
-          registry-url: "https://registry.npmjs.org"
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_LTS_VERSION }}
+                  registry-url: "https://registry.npmjs.org"
 
-      - name: Install dependencies (no change to bun.lockb)
-        run: bun install --frozen-lockfile
+            - name: Install dependencies (no change to bun.lockb)
+              run: bun install --frozen-lockfile
 
-      - name: Publish on npm
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+            - name: Publish on npm
+              run: npm publish --provenance --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

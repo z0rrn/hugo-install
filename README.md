@@ -1,117 +1,128 @@
 # hugo-install
 
-[![npm version](https://img.shields.io/npm/v/hugo-install?logo=npm&logoColor=fff&labelColor=000000&color=ff3eec)](https://www.npmjs.com/package/hugo-install) [![Build Status](https://img.shields.io/github/actions/workflow/status/z0rrn/hugo-install/publish.yml?logo=github&logoColor=fff&labelColor=000000&color=ff3eec)](https://github.com/z0rrn/hugo-install/actions)
+[![npm version](https://img.shields.io/npm/v/hugo-install?logo=npm&logoColor=fff&labelColor=000000)](https://www.npmjs.com/package/hugo-install)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/z0rrn/hugo-install/publish.yml?logo=github&logoColor=fff&labelColor=000000)](https://github.com/z0rrn/hugo-install/actions)
 
-> Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.
+> Automagically install the Hugo SSG (<https://gohugo.io>) as part of `npm install` without using got.
 
-- hugo-install installs the [Extended Hugo version](https://github.com/gohugoio/hugo/releases/tag/v0.43)
-- You must specify the Hugo version in your [package.json](#install)
-- For usage within corporate networks or behind corporate proxies, the [download url](#download-url) can be overwritten
+Hugo is one of the most popular and best static site generators. If you read this, you chose npm as your package manager.
+However, Hugo is written in [Go](https://go.dev) and not installable with npm.
 
-## Install
+Don't worry, **Hugo Install**, is a JS script which downloads the correct Hugo binary, e.g. via the `postinstall` script automagically as part of `npm install`. Nice!
 
-First you need to specify the desired Hugo version (will fail if not set). If you forget this just rerun the install command.
+The JS script installs the [Extended Hugo version](https://github.com/gohugoio/hugo/releases/tag/v0.43) if possible (because it was much easier to code).
+For usage within corporate networks or behind corporate proxies, the [download url](#download-url) can of course be overwritten.
 
-```json
-{
-  "hugo-install": {
-    "hugoVersion": "0.123.2"
-  }
-}
-```
+## How to install
+
+Run the following command to add **hugo-install** to your `devDependencies` in package.json.
 
 ```sh
 npm install hugo-install --save-dev
 ```
 
-All other package manager (like [Pnpm](https://pnpm.io/), [Yarn](https://yarnpkg.com/), [Bun](https://bun.sh) or [Deno](https://deno.com)) should also work (this package is developed with Bun).
-
-If for misterious reasons this didn't install Hugo you can run the install script directly: `node node_modules/hugo-install/install.js`.
-
-If you use Bun you need to add this to your package.json to [allow the postinstall script](https://bun.sh/docs/cli/install#lifecycle-scripts). Then just rerun the install.
-
-```json
-{
-  "trustedDependencies": ["hugo-install"]
-}
-```
+All other package manager (like [Pnpm](https://pnpm.io/), [Yarn](https://yarnpkg.com/), [Bun](https://bun.sh) or [Deno](https://deno.com)) also work (this package is developed with Bun).
 
 ### Requirements
 
-This project uses native fetch (so no node-fetch) so you need nodejs version >= 18.0.0.
+This project uses native fetch (no node-fetch): you need nodejs version >= 18.0.0.
 
-## Usage
+## How to use
 
-### npm run-script
+I recommend to run the script as part of your `postinstall` script. The Hugo version must be set using the `--version` CLI parameter. For example:
 
+<!-- prettier-ignore -->
 ```json
 {
   "scripts": {
-    "hugo": "hugo",
-    "build": "hugo",
-    "create": "hugo new",
-    "serve": "hugo server"
+    "postinstall": "hugo-installer --version 0.123.2"
   }
 }
 ```
 
-I recommend setting `alias hugo="npm run hugo` on \*nix. Then nothing changes in your workflow.
+> Important: Make sure to use the exact version number as used in the [official Hugo GitHub releases](https://github.com/gohugoio/hugo/releases) (e.g. trailing zeros that exist or do not exist).
 
-Otherwise the scripts help you. E.g. to create a new post run:
-
-```sh
-npm run create content post/my-new-post.md
-```
-
-See the [Hugo Documentation](https://gohugo.io) for more information.
-
-## Download URL
+### Download URL
 
 hugo-install supports overwriting the download url. There are multiple ways to do this:
 
-### The `hugo-install` section of your `package.json`
+#### As CLI argument
 
+<!-- prettier-ignore -->
 ```json
 {
-  "hugo-install": {
-    "hugoVersion": "0.123.2",
-    "URL": "https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz"
+  "scripts": {
+    "postinstall": "hugo-installer --version 0.123.2 --url https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz"
   }
 }
 ```
 
-### As local or global [.npmrc](https://docs.npmjs.com/files/npmrc) configuration file
+#### As local or global [.npmrc](https://docs.npmjs.com/files/npmrc) configuration file
 
 ```ini
 hugo_wrapper_url = "https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz"
 ```
 
-### As environment variables
+#### As environment variables
 
 ```sh
 export HUGO_WRAPPER_URL="https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz"
 ```
 
-**Note that you have to run the install command to re-install hugo-install itself, if you change any of these options.**
+**Note that you have to run the `postinstall` script again with `npm install`.**
 
-### Options
+## Using the Hugo Binary
 
-#### hugoVersion
+When the binary is fetched, it is usable as command, as part of an npm script or from within another JS script.
 
-Default: `""`
+### As command (only works on \*nix)
 
-Specify the Hugo version to download.
+Set `alias hugo="npm run hugo` in your shell. Then nothing changes in your workflow.
 
-#### URL
+### `npm run` scripts
 
-Default: `"https://github.com/gohugoio/hugo/releases/download/v${config.hugoVersion}/${downloadFile}"`
+The first script is required. The others are to make your life easier.
 
-Set it to your proxy URL to download the hugo binary from a different download repository.
+<!-- prettier-ignore -->
+```json
+{
+  "scripts": {
+    "hugo": "hugo",
+    "build": "hugo",
+    "new": "hugo new",
+    "serve": "hugo server"
+  }
+}
+```
+
+To create a new post run:
+
+```sh
+npm run create content post/my-new-post.md
+```
+
+### JS
+
+To execute the Hugo Binary using the Node.JS `spawn` function do for example this:
+
+<!-- prettier-ignore -->
+```javascript
+import { spawn } from "node:child_process";
+import hugoPath from "hugo-install";
+
+spawn(hugoPath, ["--config=path/to/config.toml"], {
+  stdio: "inherit",
+}).on("exit", () => {
+  // Callback
+});
+```
 
 ## Super Inspired By
 
+<!-- prettier-ignore -->
 - [fenneclab/hugo-bin](https://github.com/fenneclab/hugo-bin)
 - [brombal/just-install](https://github.com/brombal/just-install)
+- [dominique-mueller/hugo-installer](https://github.com/dominique-mueller/hugo-installer)
 
 **Thank you!**
 

@@ -1,5 +1,0 @@
-{
-  "space": true,
-  "extends": ["prettier"],
-  "rules": {}
-}
