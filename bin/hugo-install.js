@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import process from "node:process";
 import fs from "node:fs/promises";
 import decompress from "decompress";
@@ -11,7 +13,7 @@ const cliArguments = new Command();
 cliArguments
     .requiredOption("-v, --version <version>", "Hugo version to install")
     .option(
-        "-u, --URL <url>",
+        "-u, --url <url>",
         "URL to download Hugo from (defaults to GitHub) (example: <https://example.com/hugo/v0.123.2/hugo_0.123.2_freebsd-amd64.tar.gz>)",
     );
 // Important! Parse arguments and throws Error if required arguments are missing
@@ -58,8 +60,8 @@ const downloadFile =
 // Set URL to download from (select first thruthy value or set to GitHub)
 const downloadUrl =
     [
-        process.env.HUGO_WRAPPER_URL,
-        process.env.npm_config_hugo_wrapper_url,
+        process.env.HUGO_INSTALL_URL,
+        process.env.npm_config_hugo_install_url,
         cliConfig.URL,
     ].find(Boolean) ||
     `https://github.com/gohugoio/hugo/releases/download/v${cliConfig.version}/${downloadFile}`;

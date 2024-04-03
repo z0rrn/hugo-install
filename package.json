@@ -1,7 +1,7 @@
 {
     "name": "hugo-install",
-    "version": "2.0.1",
-    "description": "Install the Hugo SSG (https://gohugo.io) as part of `npm install` without using got.",
+    "version": "2.0.2",
+    "description": "Automagically install Hugo (<https://gohugo.io>) as part of `npm install` without using got.",
     "keywords": [
         "hugo",
         "gohugo",
@@ -14,6 +14,11 @@
     "license": "MIT",
     "author": "Frederik Zorn <fz@zorrn.net>",
     "type": "module",
+    "exports": {
+        ".": {
+            "import": "./main.js"
+        }
+    },
     "module": "main.js",
     "files": [
         "README.md",

@@ -6,7 +6,7 @@ on:
         branches:
             - "**"
             - "!dependabot/**"
-        # publish on new release
+    # publish on new release
     release:
         types: [published]
     pull_request:
